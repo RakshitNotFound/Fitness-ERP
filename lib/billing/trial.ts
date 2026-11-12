@@ -27,7 +27,6 @@ export type GymBillingRow = {
 export const BILLING_WARNING_WINDOW_MS = 24 * 60 * 60 * 1000;
 
 const MINUTE_MS = 60 * 1000;
-const HOUR_MS = 60 * MINUTE_MS;
 
 /**
  * Instant the gym's current access window closes, in epoch milliseconds.

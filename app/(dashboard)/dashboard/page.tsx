@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { ArrowUpRight, Calendar, CreditCard, Dumbbell, Users } from "lucide-react";
+import {Calendar, CreditCard, Dumbbell, Users } from "lucide-react";
 
 import {
   Card,
