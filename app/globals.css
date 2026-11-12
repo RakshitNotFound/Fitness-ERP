@@ -2,26 +2,233 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* ==========================================================================
+   FITNESS ERP — PREMIUM MONOCHROME DESIGN TOKENS
+   Strictly black & white. Every token is a greyscale (zinc) value:
+   deep blacks (zinc-950), crisp whites (zinc-50), hairline borders (zinc-800).
+   Values are HSL triplets so `hsl(var(--token))` and `/opacity` both work.
+   ========================================================================== */
 
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    /* Light surface — crisp white, ink black */
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+
+    --primary: 240 5.9% 10%;
+    --primary-foreground: 0 0% 98%;
+
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+
+    --destructive: 0 72.2% 45.1%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 240 5.9% 10%;
+
+    --chart-1: 240 10% 3.9%;
+    --chart-2: 240 3.8% 46.1%;
+    --chart-3: 240 5% 64.9%;
+    --chart-4: 240 4.9% 83.9%;
+    --chart-5: 240 5.9% 90%;
+
+    --sidebar: 0 0% 98%;
+    --sidebar-foreground: 240 10% 3.9%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 240 5.9% 90%;
+    --sidebar-ring: 240 5.9% 10%;
+
+    --radius: 0.625rem;
+  }
+
+  .dark {
+    /* Dark surface — the primary Fitness ERP look */
+    --background: 240 10% 3.9%; /* zinc-950 */
+    --foreground: 0 0% 98%; /* zinc-50  */
+
+    --card: 240 10% 5.5%; /* barely lifted off the page */
+    --card-foreground: 0 0% 98%;
+
+    --popover: 240 10% 6.7%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 0 0% 98%; /* crisp white CTA */
+    --primary-foreground: 240 10% 3.9%;
+
+    --secondary: 240 3.7% 15.9%; /* zinc-800 */
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%; /* zinc-400 */
+
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 62.8% 45%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 240 3.7% 15.9%; /* zinc-800 hairline */
+    --input: 240 3.7% 15.9%;
+    --ring: 240 4.9% 83.9%; /* zinc-300 focus ring */
+
+    --chart-1: 0 0% 98%;
+    --chart-2: 240 4.9% 83.9%;
+    --chart-3: 240 5% 64.9%;
+    --chart-4: 240 3.8% 46.1%;
+    --chart-5: 240 3.7% 15.9%;
+
+    --sidebar: 240 10% 3.9%;
+    --sidebar-foreground: 0 0% 98%;
+    --sidebar-primary: 0 0% 98%;
+    --sidebar-primary-foreground: 240 10% 3.9%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 0 0% 98%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 240 4.9% 83.9%;
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    -webkit-tap-highlight-color: transparent;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Monochrome text selection — inverted ink */
+  ::selection {
+    @apply bg-foreground text-background;
+  }
+
+  /* Thin, unobtrusive premium scrollbars */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--border)) transparent;
+  }
+
+  *::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: hsl(var(--border));
+    border-radius: 9999px;
+  }
+
+  *::-webkit-scrollbar-thumb:hover {
+    background-color: hsl(var(--muted-foreground) / 0.6);
+  }
+
+  /* Respect reduced-motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
 }
 
 @layer utilities {
+  /* Shared premium easing for every interactive element */
+  .transition-premium {
+    transition-property: color, background-color, border-color,
+      text-decoration-color, fill, stroke, opacity, box-shadow, transform,
+      filter, backdrop-filter;
+    transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+    transition-duration: 300ms;
+  }
+
+  /* Soft monochrome light bloom used behind hero content */
+  .gradient-hero {
+    background-image: radial-gradient(
+        65% 55% at 50% -10%,
+        hsl(var(--foreground) / 0.08) 0%,
+        transparent 70%
+      ),
+      radial-gradient(
+        45% 45% at 85% 15%,
+        hsl(var(--foreground) / 0.04) 0%,
+        transparent 70%
+      ),
+      radial-gradient(
+        55% 55% at 10% 85%,
+        hsl(var(--foreground) / 0.035) 0%,
+        transparent 70%
+      );
+  }
+
+  /* Faint technical grid, masked out toward the edges */
+  .grid-overlay {
+    background-image: linear-gradient(
+        to right,
+        hsl(var(--border) / 0.6) 1px,
+        transparent 1px
+      ),
+      linear-gradient(to bottom, hsl(var(--border) / 0.6) 1px, transparent 1px);
+    background-size: 72px 72px;
+    opacity: 0.3;
+    -webkit-mask-image: radial-gradient(
+      ellipse 60% 55% at 50% 45%,
+      #000 0%,
+      transparent 100%
+    );
+    mask-image: radial-gradient(
+      ellipse 60% 55% at 50% 45%,
+      #000 0%,
+      transparent 100%
+    );
+  }
+
+  /* Hairline divider that fades at both ends */
+  .hairline-fade {
+    background-image: linear-gradient(
+      to right,
+      transparent,
+      hsl(var(--border)),
+      transparent
+    );
+  }
+
   .text-balance {
     text-wrap: balance;
+  }
+
+  .text-pretty {
+    text-wrap: pretty;
   }
 }
