@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { redirect } from "next/navigation";
-import {Calendar, CreditCard, Dumbbell, Users } from "lucide-react";
 
 import {
   Card,
@@ -14,22 +12,7 @@ import {
 
 import { Separator } from "@/components/ui/separator";
 
-
 import { createClient } from "@/lib/supabase/server";
-
-/**
- * /dashboard — the workspace home screen.
- *
- * The shell (sidebar, top bar, trial banner) comes from
- * `app/(dashboard)/layout.tsx`; this page renders the content column only:
- *
- *   1. A "Welcome back" header — eyebrow, headline, signed-in email.
- *   2. Four KPI tiles, intentionally empty until the data modules land.
- *   3. Quiet cards linking into every module, a second path next to the nav.
- *
- * Everything is server-rendered; middleware.ts already blocks unauthenticated
- * requests, but the `redirect` below is deliberate defence-in-depth.
- */
 
 export const metadata: Metadata = {
   title: "Dashboard — Fitness ERP",
@@ -38,42 +21,6 @@ export const metadata: Metadata = {
 
 // Session-dependent: never prerender this at build time.
 export const dynamic = "force-dynamic";
-
-/** Placeholder KPIs — wired to real data once the modules exist. */
-const METRICS = [
-  { label: "Active members", value: "—", hint: "Members module" },
-  { label: "Collected this month", value: "—", hint: "Payments module" },
-  { label: "Classes this week", value: "—", hint: "Classes module" },
-  { label: "Renewals due", value: "—", hint: "Plans module" },
-] as const;
-
-/** Second entry point into each module, matching the sidebar order. */
-const MODULES = [
-  {
-    href: "/members",
-    label: "Members",
-    description: "Directory, status and history.",
-    icon: Users,
-  },
-  {
-    href: "/plans",
-    label: "Plans",
-    description: "Pricing, duration and limits.",
-    icon: Dumbbell,
-  },
-  {
-    href: "/payments",
-    label: "Payments",
-    description: "Fees collected and dues.",
-    icon: CreditCard,
-  },
-  {
-    href: "/classes",
-    label: "Classes",
-    description: "Timetable, trainers, attendance.",
-    icon: Calendar,
-  },
-] as const;
 
 export default async function DashboardPage() {
   const supabase = createClient();
@@ -86,8 +33,6 @@ export default async function DashboardPage() {
     redirect("/login?next=/dashboard");
   }
 
-  // `flex-1` (not `min-h-dvh`): the dashboard layout may render the expiry
-  // banner above this page, and the content should fill the space left over.
   return (
     <main className="relative flex flex-1 w-full flex-col items-center justify-center overflow-hidden bg-background px-6 py-20">
       <div aria-hidden className="gradient-hero pointer-events-none absolute inset-0" />
@@ -111,9 +56,7 @@ export default async function DashboardPage() {
           <CardContent className="space-y-5 p-7 pt-0">
             <Separator className="bg-zinc-800" />
             <p className="text-sm leading-relaxed text-zinc-400">
-              Step 4 checkpoint — Supabase auth, session cookies, the email
-              confirmation callback and logout are all wired up. Members,
-              payments and classes land here next.
+              Your workspace is ready. Use the sidebar to manage members, plans, payments, and classes.
             </p>
           </CardContent>
 
