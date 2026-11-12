@@ -28,8 +28,6 @@ export default function SignUpPage() {
 
   /**
    * Standard browser Supabase client (single instance per mount).
-   * Never call createClient() during render of a Server Component — this is a
-   * client component, so it is safe here.
    */
   const supabase = React.useMemo(() => createClient(), []);
 
@@ -75,8 +73,8 @@ export default function SignUpPage() {
         email: trimmedEmail,
         password,
         options: {
-          // Metadata only — the gym row is provisioned server-side
-          // (e.g. an `auth.users` trigger), never inserted from the client.
+          // THIS IS THE FIX: It points the email link to your live Vercel URL
+          emailRedirectTo: `${window.location.origin}/auth/callback`,
           data: {
             full_name: trimmedFullName,
             gym_name: trimmedGymName,
@@ -89,8 +87,6 @@ export default function SignUpPage() {
         return;
       }
 
-      // Supabase returns a user with an empty `identities` array when the
-      // email is already registered (and confirmations are enabled).
       if (data.user && data.user.identities?.length === 0) {
         setError(
           "An account with this email already exists. Try signing in instead.",
@@ -112,8 +108,6 @@ export default function SignUpPage() {
       setPassword("");
       setConfirmPassword("");
     } catch (err) {
-      // Network-layer failures (wrong/blank NEXT_PUBLIC_SUPABASE_URL, offline,
-      // CORS, ad-blocker) surface here as `TypeError: Failed to fetch`.
       if (err instanceof TypeError) {
         setError(
           "Failed to fetch: your browser could not reach Supabase. Check your connection and that NEXT_PUBLIC_SUPABASE_URL / NEXT_PUBLIC_SUPABASE_ANON_KEY are set correctly.",
